@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실로스의원</title>
+    <script src="lib/jquery-3.7.0.min.js"></script>
+    <script src="js/fullpage.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+$(function() {
+
+             
+    new Vue({
+    el: '#app',
+    data: function(){
+        return {
+            options: {
+                afterLoad: this.afterLoad,
+                navigation: true,
+                anchors: ['page1', 'page2', 'page3', 'page4'],
+            },
+        }
+    },
+    methods: {
+        afterLoad: function(origin, destination, direction){
+            console.log("After load....");
+            console.log(destination);
+        },
+        addSection: function(e) {
+            var newSectionNumber = document.querySelectorAll('.fp-section').length + 1
+
+            // creating the section div
+            var section = document.createElement('div')
+            section.className = 'section'
+            section.innerHTML = `<h3>Section ${newSectionNumber}</h3>`
+
+            // adding section
+            document.querySelector('#fullpage').appendChild(section)
+
+            // creating the section menu element
+            var sectionMenuItem = document.createElement('li')
+            sectionMenuItem.setAttribute('data-menuanchor', 'page' + newSectionNumber)
+            sectionMenuItem.innerHTML = `<a href="#page${newSectionNumber}">Section${newSectionNumber}</a>`
+
+            // adding anchor for the section
+            this.options.anchors.push(`page${newSectionNumber}`)
+
+            // we have to call `update` manually as DOM changes won't fire updates
+            // requires the use of the attribute ref="fullpage" on the
+            // component element, in this case, <full-page>
+            // ideally, use an ID element for that element too
+            this.$refs.fullpage.build()
+        },
+
+        removeSection: function(){
+            var sections = document.querySelector('#fullpage').querySelectorAll('.fp-section')
+            var lastSection = sections[sections.length - 1]
+
+            // removing the last section
+            lastSection.parentNode.removeChild(lastSection)
+
+            // removing the last anchor
+            this.options.anchors.pop()
+
+            // removing the last item on the sections menu
+            var sectionsMenuItems = document.querySelectorAll('#menu li')
+            var lastItem = sectionsMenuItems[sectionsMenuItems.length - 1]
+            lastItem.parentNode.removeChild(lastItem)
+        },
+    }
+});
+// $("#fullpage").fullpage({
+
+// responsiveWidth: 1025,
+//     })
+
+$(window).resize(function(){
+    if($(this).width() <= 640) {
+        fullpage_api.destroy('all');
+    }
+})
+
+
+function setCookie( name, value, expiredays ) {  // 쿠키저장
+	var todayDate = new Date();  //date객체 생성 후 변수에 저장
+	todayDate.setDate( todayDate.getDate() + expiredays ); 
+   	 // 시간지정(현재시간 + 지정시간)
+	document.cookie = name + "=" + value + "; path=/; expires=" + todayDate.toUTCString() + ";"
+	//위 정보를 쿠키에 굽는다
+} 
+
+
+
+
+
+
+
+
+});
+
+    </script>
+    <link rel="icon" href="./img/ico.png">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/fullpage.js@3.1.2/dist/fullpage.min.css">
+</head>
+<body>
+    <div id="popup_layer">
+        <div class="popup_box">
+            <!--팝업 컨텐츠 영역-->
+            <div class="popup_cont">
+                <h2>[ How to make Popup ]</h2>
+                <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and 
+                scrambled it to make a type specimen book.
+                </p>
+            </div>
+            <!--팝업 버튼 영역-->
+            <div class="popup_btn">
+                <!--하루동안 보지않기-->
+                <!-- <a id="chk_today" href="javascript:closeToday();" class="close_day">Do not open for a day</a>  -->
+                <!--7일간 보지않기-->
+                <!-- <a id="chk_today" href="javascript:closeToday();" class="close_day">Do not open for 7 days</a>-->
+                <a href="javascript:closePop();">Close</a>
+                <script>
+                        $(function(){
+	$(".popup_box").draggable({containment:'parent', scroll:false}); // 레이어 팝업 창 드래그 가능
+	//{containment:'parent', scroll:false} 화면 영역 밖으로 드래그 안됌.
+                
+	if(document.cookie.indexOf("popToday=close") < 0 ){      // 쿠키 저장여부 체크
+		document.getElementById("popup_layer").style.display = "block";
+		}else {
+		document.getElementById("popup_layer").style.display = "none"; 
+		}
+	});
+
+                    //오늘하루만보기 닫기버튼 스크립트
+function closeToday() { 
+	setCookie( "popToday", "close" , 1  ); 
+	$("#popup_layer").css("display", "none");
+	document.getElementById("popup_layer").style.display = "none";
+}
+//그냥 닫기버튼 스크립트
+function closePop() { 
+	document.getElementById("popup_layer").style.display = "none";
+}
+
+
+                </script>
+            </div>
+        </div>
+        
+      </div>
+
+    <div class="nav">
+
+        <div class="contact">
+            <a href="tel:1551-8875"><img src="img/icon4.png" alt="전화"></a>
+        </div>
+        <div class="contact">
+            <a href="https://booking.naver.com/booking/13/bizes/1043837"><img src="img/img (1).png" alt="네이버"></a>
+        </div>
+        <div class="contact">
+            <a href="https://pf.kakao.com/_AxebKG/chat"><img src="img/icon1.png" alt="카카오"></a>
+        </div>
+    </div>
+    <div class="logo">
+        <div class="inner">
+            <div class="box">
+                <span>S</span>
+                <span>I</span>
+                <span>L</span>
+                <span>O</span>
+                <span>S</span>
+            </div>
+            <div class="box">
+                <span>L</span>
+                <span>I</span>
+                <span>F</span>
+                <span>T</span>
+                <span>I</span>
+                <span>N</span>
+                <span>G</span>
+            </div>
+            <div class="box">
+                <span>C</span>
+                <span>L</span>
+                <span>I</span>
+                <span>N</span>
+                <span>I</span>
+                <span>C</span>
+            </div>
+        </div>
+    </div>
+    <div class="bg">
+        <img src="./img/bg.png" alt="배경">
+    </div>
+    <div id="app">
+        <full-page :options="options" id="fullpage" ref="fullpage">
+            <div class="section">
+                <figure>
+                    <img src="./img/character1.png" alt="인물">
+                </figure>
+                <div class="text_left">
+                    <p>나를 위한 커스텀 리프팅,<br>섬세한 손끝의 아름다움을 선사해 드립니다</p>
+                    <h1>실로스의원</h1>
+                </div>
+                <div class="text_bottom">
+                    <h1>주요 진료 과목</h1>
+                    <ul>
+                        <li>처진 얼굴 리프팅 (실리프팅/레이저)</li>
+                        <li>낮은 코 리프팅 (실/필러)</li>
+                        <li>광대 축소 실리프팅</li>
+                        <li>고난도 필러/보톡스</li>
+                        <li>무통 스킨 부스터</li>
+                        <li>눈 처짐 성형/얼굴거상</li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="section">
+                <div class="slide">
+                    <figure>
+                        <img src="./img/character2.png" alt="인물">
+                    </figure>
+                    <div class="text_left">
+                        <h1>SILOS SPECIAL</h1>
+                    </div>
+                    <div class="text_right">
+                        <ul>
+                            <li>
+                                <h1>고난이도 필러</h1>
+                                <p>심미안의 의료진이 개인의 얼굴형을 분석하여 입체적이고 균형있는 얼굴로 교정합니다.</p>
+                            </li>
+                            <li>
+                                <h1>보톡스 시술</h1>
+                                <p>다양한 주름 고민, 과도하게 발달된 근육 등 보톡스를 이용하여 고민을 개선합니다.</p>
+                            </li>
+                            <li>
+                                <h1>실로스 리프팅</h1>
+                                <p>개인의 피부상태와 고민부위를 고려하여 실리프팅, 레이저리프팅 등 1:1 맞움 리프팅 프로세스를 제안합니다.</p>
+                            </li>
+                            <li>
+                                <h1>실로스 레이저</h1>
+                                <p>실로스 레이저 올인원 케어 프로그램은 1:1 맞춤 프로그램으로 색소와 피부고민을 한 번에 관리하는 프로그램입니다.</p>
+                            </li>
+                        </ul>
+                    </div>        
+                </div>
+                <!-- <div class="slide">
+                    <h3>Slide 2.2</h3>
+                </div>
+                <div class="slide">
+                    <h3>Slide 2.3</h3>
+                </div> -->
+            </div>
+            <div class="section">
+                <div class="intro">
+                    <h1>Doctors</h1>
+                    <div class="doctor">
+                        <img src="img/Layer 2.png" alt="원장">
+                        <h1>정시온 <span>원장님</span></h1>
+                        <div class="text">
+                            <h1>성형 및 리프팅 시술 2만여건<br>보톡스 필러 등 시술 30만여 건</h1>
+                            <p>(주) Silos Lifting Co. 대표<br>실로스 클리닉 창원 선도센터 대표원장</p>
+                            <span>포에버 성형외과 창립 원장</span>
+                            <span>(전)시온성형외과 대표원장</span>
+                            <span>종합국제미용성형의학회장</span>
+                            <span>국제성형외과학회 정회원</span>
+                            <span>시온 열린성형세미나 주관원장</span>
+                            <span>(2009년부터 65회 개최 강의·수술·시연)</span>
+                        </div>
+                    </div>
+                    <div class="doctor">
+                        <img src="img/박현근.png" alt="원장">
+                        <h1>박현근 <span>원장님</span></h1>
+                        <div class="text">
+                            <h1>실프팅 시술 2만여건<br>사용 리프팅 실 길이 27,500m</h1>
+                            <p>실로스 Dr.트레이닝 센터장<br>실로스 클리닉 창원 선도센터 대표원장</p>
+                            <span>대한민국 실 리프팅 최고 권위자</span>
+                            <span>사용한 총 실 길이 27,500m(에베레스트 3배높이)</span>
+                            <span>외국인 대상 실리프팅 건 수 3,000여건</span>
+                            <span>의사 대상 강의 건 수 500여 건</span>
+                            <span>강의 수강 전 세계 의사 수 10,000여 명</span>
+                            <span>(전)로데오, 팽팽의원 대표 원장</span>
+                            <span>대한필러학회 기획이사 / 엘러간 / 레스틸렌 교육강사</span>
+                        </div>
+                    </div>
+                    <div class="doctor">
+                        <img src="img/Layer 3.png" alt="원장">
+                        <h1>임동혁 <span>원장님</span></h1>
+                        <div class="text">
+                            <h1>슈링크, 인모드 시술 10,000여건<br>쁘띠 시술 10만여 건</h1>
+                            <p>실로스 클리닉 창원 원장</p>
+                            <span>대한 미용성형레이저 학회 정회원</span>
+                            <span>대한 리프팅연구회 정회원</span>
+                            <span>대한 미용외과 학회 정회원</span>
+                            <span>고난도 필러 / 보톡스 전문</span>
+                            <span>울쎄라 / 온다 레이저 키닥터</span>
+                            <span>덴서티 / 엔코어 키닥터</span>
+                            <span>전문시술분야 : 실리프팅, 코 실리프팅,</span>
+                            <span>심부볼 축소실, 레이저리프팅, 고난도 필러시술</span>
+                        </div>
+                    </div>
+                    <div class="doctor">
+                        <img src="img/Layer 4.png" alt="원장">
+                        <h1>조선아 <span>원장님</span></h1>
+                        <div class="text">
+                            <h1>슈링크, 인모드 시술 20,000여 건<br>보톡스, 필러 등 시술 10만여 건</h1>
+                            <p>실로스 클리닉 창원 원장</p>
+                            <span>실로스 창원 원장, 옴므센터장</span>
+                            <span>대한 미용성형레이저 학회 회원</span>
+                            <span>대한 미용외과학회 회원</span>
+                            <span>대한 리프팅 연구회 회원</span>
+                            <span>울쎄라 / 온다 레이저 키닥터</span>
+                            <span>덴서티 / 엔코어 시술 마에스트로</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="up">
+                        <div class="google_map">
+                            <!-- 지도 불러오기 -->
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.2957331273733!2d128.67867337624298!3d35.22400755495438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3568ccef7b612d9b%3A0x30eff35be19bb433!2z6rK97IOB64Ko64-EIOywveybkOyLnCDshLHsgrDqtawg7KSR7JWZ64yA66GcIDExNA!5e0!3m2!1sko!2skr!4v1704781073239!5m2!1sko!2skr"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    
+                        </div>
+                        <div class="contact">
+                            <h1>Contact</h1>
+                            <h1>1551-8875</h1>
+                            <p>경남 창원시 성산구 중앙대로 114, 1층</p>
+                        </div>
+                    </div>
+                    <div class="down">
+                        <span>상호 : 실로스의원 | 사업자 등록 : 848-46-00962</span>
+                        <span>COPYRIGHTⓒ SILOS. ALL RIGHT RESERVED.</span>
+                    </div>
+                </div>
+            </div>
+        </full-page>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+    <script src="https://unpkg.com/vue-fullpage.js@0.1.5/dist/vue-fullpage.min.js"></script>    
+</body>
+</html>
